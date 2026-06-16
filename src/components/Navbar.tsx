@@ -41,13 +41,6 @@ export function Navbar() {
               alt="Makan Logo" 
               className="h-16 md:h-20 w-auto object-contain"
             />
-=======
-            <span className="font-display text-2xl sm:text-3xl font-semibold tracking-wide text-gold-gradient">
-              Makan
-            </span>
-            <span className="hidden sm:inline text-[10px] tracking-[0.3em] uppercase text-muted-foreground mt-1">
-              Nargile · Bar
-            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-9">

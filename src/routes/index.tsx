@@ -95,8 +95,14 @@ function Home() {
       )}
 
       {/* ABOUT TEASER */}
-      <section className="py-20 sm:py-28 px-5 sm:px-8 bg-card/30 border-y border-border">
-        <div className="mx-auto max-w-5xl grid gap-12 md:grid-cols-2 items-center">
+      <section 
+        className="relative py-20 sm:py-28 px-5 sm:px-8 border-y border-border bg-fixed bg-center bg-cover"
+        style={{ backgroundImage: `url(${heroImg})` }}
+      >
+        {/* Σκούρο overlay για να διαβάζεται τέλεια το κείμενο πάνω από τη φωτογραφία */}
+        <div className="absolute inset-0 bg-background/85" />
+
+        <div className="relative z-10 mx-auto max-w-5xl grid gap-12 md:grid-cols-2 items-center">
           <div>
             <p className="text-[11px] tracking-[0.3em] uppercase text-gold">{t("nav.about")}</p>
             <h2 className="mt-3 font-display text-4xl sm:text-5xl text-foreground leading-tight">
@@ -111,7 +117,7 @@ function Home() {
               { v: "9h", l: t("about.stat2") },
               { v: "10k+", l: t("about.stat3") },
             ].map((s, i) => (
-              <div key={i} className="rounded-xl border border-border bg-background/40 p-5 text-center">
+              <div key={i} className="rounded-xl border border-border bg-background/60 backdrop-blur-sm p-5 text-center">
                 <div className="font-display text-3xl sm:text-4xl text-gold-gradient">{s.v}</div>
                 <div className="mt-2 text-[10px] tracking-[0.2em] uppercase text-muted-foreground">{s.l}</div>
               </div>
