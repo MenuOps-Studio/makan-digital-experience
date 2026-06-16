@@ -15,5 +15,13 @@ export default defineConfig({
   },
   nitro: {
     preset: "netlify"
+  },
+  vite: {
+    ssr: {
+      external: [
+        '@tanstack/react-router',
+        '@tanstack/react-query'
+      ]
+    }
   }
 });
