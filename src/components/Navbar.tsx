@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -9,7 +9,28 @@ export function Navbar() {
   const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  
+  // ΠΡΟΣΘΗΚΗ: Δημιουργούμε ένα ref για όλο το header
+  const navRef = useRef<HTMLElement>(null);
 
+  // ΠΡΟΣΘΗΚΗ: Μηχανισμός που κλείνει το μενού αν κάνεις κλικ απ' έξω
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [open]);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
@@ -26,6 +47,7 @@ export function Navbar() {
 
   return (
     <header
+      ref={navRef} // <-- ΠΡΟΣΘΗΚΗ: Βάζουμε το ref εδώ
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         scrolled || open
