@@ -1,0 +1,134 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
+  --font-display: "Cormorant Garamond", "Playfair Display", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Makan — luxury black & gold */
+  --background: oklch(0.13 0.005 60);
+  --foreground: oklch(0.96 0.01 80);
+
+  --card: oklch(0.17 0.006 60);
+  --card-foreground: oklch(0.96 0.01 80);
+  --popover: oklch(0.17 0.006 60);
+  --popover-foreground: oklch(0.96 0.01 80);
+
+  --gold: oklch(0.78 0.13 82);
+  --gold-soft: oklch(0.88 0.08 86);
+  --gold-deep: oklch(0.58 0.12 70);
+
+  --primary: var(--gold);
+  --primary-foreground: oklch(0.13 0.005 60);
+
+  --secondary: oklch(0.22 0.008 60);
+  --secondary-foreground: oklch(0.96 0.01 80);
+
+  --muted: oklch(0.22 0.008 60);
+  --muted-foreground: oklch(0.68 0.02 80);
+
+  --accent: var(--gold);
+  --accent-foreground: oklch(0.13 0.005 60);
+
+  --destructive: oklch(0.60 0.20 25);
+  --destructive-foreground: oklch(0.98 0.01 80);
+
+  --border: oklch(0.28 0.012 70 / 60%);
+  --input: oklch(0.28 0.012 70 / 60%);
+  --ring: var(--gold);
+
+  --gradient-gold: linear-gradient(135deg, oklch(0.88 0.08 86), oklch(0.68 0.13 75), oklch(0.55 0.10 65));
+  --gradient-dark: linear-gradient(180deg, oklch(0.13 0.005 60 / 0), oklch(0.10 0.005 60 / 0.85), oklch(0.08 0.005 60));
+  --shadow-gold: 0 12px 40px -12px oklch(0.78 0.13 82 / 0.45);
+  --shadow-soft: 0 20px 50px -20px oklch(0 0 0 / 0.6);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+@utility text-gold { color: var(--gold); }
+@utility bg-gold-gradient { background-image: var(--gradient-gold); }
+@utility text-gold-gradient {
+  background-image: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@utility shadow-gold { box-shadow: var(--shadow-gold); }
+@utility gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+}
+@utility noise-overlay {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(oklch(1 0 0 / 0.015) 1px, transparent 1px);
+    background-size: 3px 3px;
+    mix-blend-mode: overlay;
+  }
+}
+
+@keyframes fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+@utility animate-fade-up { animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@utility animate-fade-in { animation: fade-in 0.8s ease-out both; }
+@utility delay-100 { animation-delay: 0.1s; }
+@utility delay-200 { animation-delay: 0.2s; }
+@utility delay-300 { animation-delay: 0.3s; }
+@utility delay-400 { animation-delay: 0.4s; }
+@utility delay-500 { animation-delay: 0.5s; }
