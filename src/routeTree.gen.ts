@@ -10,10 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-<<<<<<< HEAD
 import { Route as ReservationsRouteImport } from './routes/reservations'
-=======
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -24,14 +21,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-<<<<<<< HEAD
 const ReservationsRoute = ReservationsRouteImport.update({
   id: '/reservations',
   path: '/reservations',
   getParentRoute: () => rootRouteImport,
 } as any)
-=======
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
   path: '/menu',
@@ -58,10 +52,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
-<<<<<<< HEAD
   '/reservations': typeof ReservationsRoute
-=======
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7
   '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesByTo {
@@ -69,10 +60,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
-<<<<<<< HEAD
   '/reservations': typeof ReservationsRoute
-=======
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7
   '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesById {
@@ -81,15 +69,11 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
-<<<<<<< HEAD
   '/reservations': typeof ReservationsRoute
-=======
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7
   '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-<<<<<<< HEAD
   fullPaths:
     | '/'
     | '/about'
@@ -107,12 +91,6 @@ export interface FileRouteTypes {
     | '/menu'
     | '/reservations'
     | '/sitemap.xml'
-=======
-  fullPaths: '/' | '/about' | '/contact' | '/menu' | '/sitemap.xml'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/menu' | '/sitemap.xml'
-  id: '__root__' | '/' | '/about' | '/contact' | '/menu' | '/sitemap.xml'
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -120,10 +98,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   MenuRoute: typeof MenuRoute
-<<<<<<< HEAD
   ReservationsRoute: typeof ReservationsRoute
-=======
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
@@ -136,7 +111,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-<<<<<<< HEAD
     '/reservations': {
       id: '/reservations'
       path: '/reservations'
@@ -144,8 +118,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReservationsRouteImport
       parentRoute: typeof rootRouteImport
     }
-=======
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7
     '/menu': {
       id: '/menu'
       path: '/menu'
@@ -182,16 +154,12 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   MenuRoute: MenuRoute,
-<<<<<<< HEAD
   ReservationsRoute: ReservationsRoute,
-=======
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-<<<<<<< HEAD
 
 import type { getRouter } from './router.tsx'
 import type { startInstance } from './start.ts'
@@ -202,5 +170,3 @@ declare module '@tanstack/react-start' {
     config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }
-=======
->>>>>>> 219432a9e03b44da6393c78bc80e1a390556c1d7

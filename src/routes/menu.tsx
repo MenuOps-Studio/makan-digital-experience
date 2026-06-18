@@ -104,7 +104,7 @@ function MenuPage() {
                 <h2 className="font-display text-3xl sm:text-4xl text-gold-gradient">
                   {lang === "el" ? cat.name_el : cat.name_en}
                 </h2>
-                <span className="text-xs tracking-[0.2em] uppercase text-muted-foreground">
+                <span className="shrink-0 whitespace-nowrap text-xs tracking-[0.2em] uppercase text-muted-foreground">
                   {items.length} {lang === "el" ? "προϊόντα" : "items"}
                 </span>
               </div>

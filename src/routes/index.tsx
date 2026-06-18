@@ -111,15 +111,17 @@ function Home() {
             <p className="mt-5 text-muted-foreground leading-relaxed">{t("about.p1")}</p>
             <p className="mt-3 text-muted-foreground leading-relaxed">{t("about.p2")}</p>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {[
               { v: "30+", l: t("about.stat1") },
               { v: "9h", l: t("about.stat2") },
               { v: "10k+", l: t("about.stat3") },
             ].map((s, i) => (
-              <div key={i} className="rounded-xl border border-border bg-background/60 backdrop-blur-sm p-5 text-center">
-                <div className="font-display text-3xl sm:text-4xl text-gold-gradient">{s.v}</div>
-                <div className="mt-2 text-[10px] tracking-[0.2em] uppercase text-muted-foreground">{s.l}</div>
+              <div key={i} className="rounded-xl border border-border bg-background/60 backdrop-blur-sm px-2 py-4 sm:p-5 text-center">
+                <div className="font-display text-2xl sm:text-4xl text-gold-gradient">{s.v}</div>
+                <div className="mt-2 text-[9px] sm:text-[10px] tracking-wider sm:tracking-[0.2em] uppercase text-muted-foreground break-words">
+                  {s.l}
+                </div>
               </div>
             ))}
           </div>
