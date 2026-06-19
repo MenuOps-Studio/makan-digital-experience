@@ -96,7 +96,7 @@ function Home() {
 
       {/* ABOUT TEASER */}
       <section 
-        className="relative py-20 sm:py-28 px-5 sm:px-8 border-y border-border bg-fixed bg-center bg-cover"
+        className="relative py-32 sm:py-56 px-5 sm:px-8 border-y border-border bg-fixed bg-center bg-cover"
         style={{ backgroundImage: `url(${heroImg})` }}
       >
         {/* Σκούρο overlay για να διαβάζεται τέλεια το κείμενο πάνω από τη φωτογραφία */}
@@ -138,14 +138,14 @@ function Home() {
           <div className="grid gap-5 md:grid-cols-3">
             {(lang === "el"
               ? [
-                  { n: "Νίκος Π.", t: "Ο καλύτερος ναργιλές στις Σέρρες. Premium αισθητική και άψογο service." },
-                  { n: "Ελένη Κ.", t: "Υπέροχη ατμόσφαιρα και cocktails. Η σταθερή μας επιλογή για βραδινό." },
-                  { n: "Δημήτρης Σ.", t: "Επαγγελματίες, ευγενικοί και πάντα προσεκτικοί στη λεπτομέρεια." },
+                  { n: "Petros Kardoulakis", t: "Πολύ όμορφος και ζεστός χώρος είναι το ιδανικό μέρος για ναργιλέ !!" },
+                  { n: "mr moustache", t: "Πολύ ωραίο μαγαζί για να απολαύσεις τον καφε σου η το ποτό σου. Οι ναργιλέδες είναι εξαιρετικής ποιότητας και το προσωπικό πολύ ευγενικό. Μπράβο στα παιδιά φοβερή δουλειά" },
+                  { n: "Νικολας Τζιομαλλος", t: "Πολύ καλό μαγαζί, φοβερή εξυπηρέτηση από το προσωπικό και πολυ επαγγελματισμός , το συνιστώ να ερθετε!" },
                 ]
               : [
-                  { n: "Nikos P.", t: "Best nargile in Serres. Premium feel and flawless service." },
-                  { n: "Eleni K.", t: "Beautiful atmosphere and great cocktails. Our go-to for nights out." },
-                  { n: "Dimitris S.", t: "Professional, friendly and always attentive to detail." },
+                  { n: "Petros Kardoulakis", t: "Very beautiful and warm space, it is the ideal place for hookah!!" },
+                  { n: "mr moustache", t: "Very nice shop to enjoy your coffee or your drink. The hookahs are of excellent quality and the staff is very kind. Well done to the guys, great job" },
+                  { n: "Nikolas Tziomallos", t: "Very good shop, great service from the staff and very professional, I recommend you come!" },
                 ]
             ).map((r, i) => (
               <figure key={i} className="rounded-xl border border-border/60 bg-card/40 p-6">
