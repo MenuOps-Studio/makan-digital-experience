@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query"; // ΠΡΟΣΘΗΚΗ: useQueryClient
+import { useEffect } from "react"; // ΠΡΟΣΘΗΚΗ: useEffect
 import { ArrowRight, Phone, Sparkles, Star, Quote } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 import { useI18n } from "@/lib/i18n";
 import { fetchMenu } from "@/lib/menu";
 import { MenuItemCard } from "@/components/MenuItemCard";
+import { supabase } from "@/integrations/supabase/client"; // ΠΡΟΣΘΗΚΗ: supabase
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,9 +20,29 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { t, lang } = useI18n();
+  const queryClient = useQueryClient(); // ΠΡΟΣΘΗΚΗ
   const { data } = useQuery({ queryKey: ["menu"], queryFn: fetchMenu });
 
-  const featured = (data?.items ?? []).filter((i: any) => i.is_featured).slice(0, 3);
+  // --- ΝΕΟΣ ΚΩΔΙΚΑΣ: SUPABASE REAL-TIME ---
+  useEffect(() => {
+    const channel = supabase
+      .channel('realtime-home-updates')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'menu_items' },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ["menu"] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+  // ----------------------------------------
+
+  const featured = (data?.items ?? []).filter((i: any) => i.is_chef_choice && i.status === 'AVAILABLE').slice(0, 3);
 
   return (
     <>

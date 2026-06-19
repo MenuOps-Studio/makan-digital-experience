@@ -65,7 +65,7 @@ function ReservationPage() {
       // ---------------------------------------------
 
       const data = {
-        restaurant_id: 1,
+        restaurant_id: 4,
         name: formData.get("name"),
         email: formData.get("email"),
         date: selectedDate,

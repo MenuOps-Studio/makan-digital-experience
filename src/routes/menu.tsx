@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query"; // ΠΡΟΣΘΗΚΗ: useQueryClient
+import { useMemo, useState, useEffect } from "react"; // ΠΡΟΣΘΗΚΗ: useEffect
 import { Search } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { fetchMenu } from "@/lib/menu";
 import { MenuItemCard } from "@/components/MenuItemCard";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client"; // ΠΡΟΣΘΗΚΗ: supabase
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -21,14 +22,54 @@ export const Route = createFileRoute("/menu")({
 
 function MenuPage() {
   const { t, lang } = useI18n();
+  const queryClient = useQueryClient(); // ΠΡΟΣΘΗΚΗ: Εργαλείο για ανανέωση του cache
   const { data, isLoading } = useQuery({ queryKey: ["menu"], queryFn: fetchMenu });
 
   const [active, setActive] = useState<string>("all");
   const [query, setQuery] = useState("");
 
-  const categories = data?.categories ?? [];
   const items = data?.items ?? [];
 
+  // --- ΝΕΟΣ ΚΩΔΙΚΑΣ: SUPABASE REAL-TIME ---
+  useEffect(() => {
+    // Φτιάχνουμε το "κανάλι" επικοινωνίας με τη βάση
+    const channel = supabase
+      .channel('realtime-menu-updates')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'menu_items' },
+        () => {
+          // Μόλις αλλάξει κάτι, λέμε στο React Query να φέρει αθόρυβα τα νέα δεδομένα
+          queryClient.invalidateQueries({ queryKey: ["menu"] });
+        }
+      )
+      .subscribe();
+
+    // Κλείνουμε το κανάλι αν ο χρήστης φύγει από τη σελίδα (για να μην βαραίνει το κινητό του)
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+  // ----------------------------------------
+
+  // 1. Δημιουργούμε τις κατηγορίες δυναμικά από τα πιάτα
+  const categories = useMemo(() => {
+    const uniqueCats = new Map();
+    items.forEach((item: any) => {
+      if (!item.category) return; 
+      if (!uniqueCats.has(item.category)) {
+        uniqueCats.set(item.category, {
+          id: item.category,
+          slug: item.category.toLowerCase().replace(/\s+/g, '-'),
+          name_el: item.category,
+          name_en: item.category_en || item.category 
+        });
+      }
+    });
+    return Array.from(uniqueCats.values());
+  }, [items]);
+
+  // 2. Ομαδοποιούμε τα πιάτα με βάση τις δυναμικές κατηγορίες
   const grouped = useMemo(() => {
     const q = query.trim().toLowerCase();
     return categories
@@ -36,11 +77,11 @@ function MenuPage() {
       .map((cat) => ({
         cat,
         items: items
-          .filter((i) => i.category_id === cat.id)
-          .filter((i) => {
+          .filter((i: any) => i.category === cat.id && i.status !== 'HIDDEN')
+          .filter((i: any) => {
             if (!q) return true;
-            const name = (lang === "el" ? i.name_el : i.name_en).toLowerCase();
-            const desc = ((lang === "el" ? i.description_el : i.description_en) ?? "").toLowerCase();
+            const name = (lang === "el" ? i.name_el : i.name_en || "").toLowerCase();
+            const desc = ((lang === "el" ? i.description_el : i.description_en) || "").toLowerCase();
             return name.includes(q) || desc.includes(q);
           }),
       }))
